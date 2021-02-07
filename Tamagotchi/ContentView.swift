@@ -7,10 +7,74 @@
 
 import SwiftUI
 
+
+
 struct ContentView: View {
+    @State private var tamagotchi: Tamagotchi = Tamagotchi(isHealthy: true, bladder: 3, hunger: 6, age: 1, name: "Greggory", weight: 5.5, height: 6.6, hapiness: 10, hygiene: 9)
+    
+    let timer = Timer.publish(every: 5, on: .main, in: .common)
+        .autoconnect()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack(alignment: .center, spacing: 34.0){
+            Text("Good Morning \(tamagotchi.name)\nYou are \(tamagotchi.age) years old with a height of \(tamagotchi.height) and a weight of \(tamagotchi.weight)\nYour hapiness level is \(tamagotchi.hapiness)/10, your bladder level is \(tamagotchi.bladder)/10, your hunger level is \(tamagotchi.hunger)/10 and your hygiene level is \(tamagotchi.hygiene)/10")
+                .fontWeight(.ultraLight)
+                .multilineTextAlignment(.center)
+                .onReceive(timer, perform: { _ in
+                    tamagotchi.aging()
+                })
+                .font(.headline)
+                .foregroundColor(Color.black)
+                .lineLimit(nil)
+                .opacity(5.5)
+                .padding()
+            Button("Eat Snack", action: {
+                tamagotchi.eatSnack()
+            })
+            .padding(.all)
+            .accentColor(.purple)
+            .border(Color.green, width: 16)
+            .blendMode(.exclusion)
+            .rotation3DEffect(Angle(degrees: 9), axis: (x: 10.0, y: 10.0, z: 10.0))
+            .hoverEffect(.lift)
+            .transformEffect(.identity)
+            
+            
+            
+            Button("Play Game", action: {
+                tamagotchi.playGame()
+            })
+            .padding(.all)
+            .accentColor(.purple)
+            .border(Color.yellow, width: 16)
+            .blendMode(.multiply)
+            .rotation3DEffect(Angle(degrees: -9), axis: (x: 10.0, y: 10.0, z: 10.0))
+            .hoverEffect(.lift)
+            .transformEffect(.identity)
+            
+            
+            Button("Eat Meal", action: {
+                tamagotchi.eatMeal()
+            })
+            .padding(.all)
+            .accentColor(.orange)
+            .border(Color.purple, width: 16)
+            .blendMode(.exclusion)
+            .rotation3DEffect(Angle(degrees: 15), axis: (x: 10.0, y: 10.0, z: 10.0))
+            .hoverEffect(.lift)
+            .transformEffect(.identity)
+            Button("Go to the bathroom", action: {
+                tamagotchi.bathroom()
+            })
+            .padding(.all)
+            .accentColor(.red)
+            .border(Color.black, width: 16)
+            .rotation3DEffect(Angle(degrees: -7), axis: (x: -10.0, y: -10.0, z: 10.0))
+            .hoverEffect(.automatic)
+            .transformEffect(.identity)
+        }
+        .padding(.all)
+        
     }
 }
 
