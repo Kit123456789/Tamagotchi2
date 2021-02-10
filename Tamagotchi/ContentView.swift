@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @State private var tamagotchi: Tamagotchi = Tamagotchi(isHealthy: true, bladder: 3, hunger: 6, age: 1, name: "Greggory", weight: 5.5, height: 6.6, hapiness: 10, hygiene: 9)
+    @StateObject private var tamagotchi = Tamagotchi()
     
     let timer = Timer.publish(every: 5, on: .main, in: .common)
         .autoconnect()
@@ -72,6 +72,10 @@ struct ContentView: View {
             .rotation3DEffect(Angle(degrees: -7), axis: (x: -10.0, y: -10.0, z: 10.0))
             .hoverEffect(.automatic)
             .transformEffect(.identity)
+            
+            .alert(isPresented: $tamagotchi.isDead) {
+                            Alert(title: Text("Uh Oh..."), message: Text("\(tamagotchi.name) is dead!"), dismissButton: .default(Text("Oh dear :(")))
+                    }
         }
         .padding(.all)
         

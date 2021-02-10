@@ -7,18 +7,30 @@
 
 import Foundation
 
-struct Tamagotchi{
-    var isHealthy: Bool = true
-    var bladder: Int
-    var hunger: Int
-    var age: Int
+class Tamagotchi: ObservableObject{
+    @Published var isDead: Bool = false
+    @Published var bladder: Int
+    @Published var hunger: Int
+    @Published var age: Int
     let name: String
-    var weight: Double
-    var height: Double
-    var hapiness: Int
-    var hygiene: Int
+    @Published var weight: Double
+    @Published var height: Double
+    @Published var hapiness: Int
+    @Published var hygiene: Int
     
-    mutating func eatSnack(){
+    init(){
+        isDead = false
+        bladder = 3
+        hunger = 6
+        age = 1
+        name = "Greggory"
+        weight = 5.5
+        height = 6.6
+        hapiness = 10
+        hygiene = 9
+    }
+    
+    func eatSnack(){
         hunger -= 2
         if hunger < 0{
             hunger = 0
@@ -27,7 +39,7 @@ struct Tamagotchi{
         height += 0.1
         print("\(name) has been fed")
     }
-    mutating func playGame(){
+    func playGame(){
         hapiness += 3
         if hapiness > 10{
             hapiness = 10
@@ -38,7 +50,7 @@ struct Tamagotchi{
         }
         print("\(name) loves the game!")
     }
-    mutating func eatMeal(){
+    func eatMeal(){
         hunger -= 5
         if hunger < 0{
             hunger = 0
@@ -47,7 +59,7 @@ struct Tamagotchi{
         height += 0.2
         
     }
-    mutating func bathroom(){
+    func bathroom(){
         hygiene += 5
         if hygiene > 10{
             hygiene = 10
@@ -57,34 +69,34 @@ struct Tamagotchi{
             bladder = 0
         }
     }
-    mutating func aging(){
+    func aging(){
         age += 1
         if age == 100{
-            isHealthy = false
+            isDead = true
         }
         bladder += 1
         if bladder > 10{
-            isHealthy = false
+            isDead = true
         }
         height += 0.5
         if height > 100{
-            isHealthy = false
+            isDead = true
         }
         weight -= 0.1
         if weight < 1{
-            isHealthy = false
+            isDead = true
         }
         hapiness -= 1
         if hapiness < 0{
-            isHealthy = false
+            isDead = true
         }
         hunger += 1
         if hunger > 10{
-            isHealthy = false
+            isDead = true
         }
         hygiene -= 1
         if hygiene < 0{
-            isHealthy = false
+            isDead = true
         }
     }
 }
